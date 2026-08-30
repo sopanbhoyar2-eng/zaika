@@ -57,3 +57,4 @@ Register/login, placing orders, and live tracking logic arrive in the next miles
 **Milestone 2 — Authentication System**: register/login for all 4 roles,
 password hashing (Flask-Bcrypt), JWT tokens (Flask-JWT-Extended), and
 role-based route protection (`@role_required('restaurant')` style decorator).
+ 
