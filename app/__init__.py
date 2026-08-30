@@ -1,5 +1,4 @@
 from flask import Flask, render_template, jsonify
-from whitenoise import WhiteNoise
 from flask_cors import CORS
 
 from app.config import Config
@@ -9,9 +8,6 @@ from app.extensions import db, bcrypt, jwt, migrate
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
-    # Serves /static reliably behind Railway's proxy -- Flask's own static
-    # handler isn't reliable there for every asset type.
-    app.wsgi_app = WhiteNoise(app.wsgi_app, root='app/static/', prefix='static/')
 
     db.init_app(app)
     bcrypt.init_app(app)
@@ -33,7 +29,7 @@ def create_app():
     app.register_blueprint(admin_bp, url_prefix='/api/admin')
     app.register_blueprint(notifications_bp, url_prefix='/api/notifications')
 
-    from app import models  # noqa: F401 -- registers all models with SQLAlchemy
+    from app import models  # noqa: F401
 
     @app.route('/api/health')
     def health_check():
